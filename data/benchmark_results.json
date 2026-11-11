@@ -1,0 +1,39 @@
+{
+  "geo_with_index": {
+    "query": "businesses.find(location: {$near: ...})",
+    "index_used": "2dsphere (idx_businesses_location_2dsphere)",
+    "winning_stage": "GEO_NEAR_2DSPHERE",
+    "input_stage": "None",
+    "execution_time_ms": 2,
+    "total_docs_examined": 18,
+    "n_returned": 17
+  },
+  "geo_without_index": {
+    "query": "businesses.find(location: {$near: ...}) without index",
+    "result": "ERROR: MongoDB strictly forbids $near without a 2dsphere index",
+    "error_detail": "error processing query: ns=yelpnosql.businessesTree: GEONEAR  field=location maxdist=3000 isNearSphere=0\nSort: {}\nProj: {}\n planner returned error :: caused by :: unable to find index for $geoNear query, full error: {'ok': 0.0, 'errmsg': 'error processing query: ns=yelpnosql.businessesTree: GEONEAR  field=location maxdist=3000 isNearSphere=0\\nSort: {}\\nProj: {}\\n planner returned error :: caused by :: unable to find index for $geoNear query', 'code': 291, 'codeName': 'NoQueryExecutionPlans'}"
+  },
+  "category_with_index": {
+    "stage": "FETCH",
+    "input_stage": "IXSCAN",
+    "index_name": "idx_businesses_categories",
+    "docs_examined": 4,
+    "keys_examined": 4,
+    "n_returned": 4,
+    "execution_time_ms": 0
+  },
+  "category_without_index": {
+    "stage": "COLLSCAN",
+    "input_stage": "None",
+    "docs_examined": 20,
+    "keys_examined": 0,
+    "n_returned": 4,
+    "execution_time_ms": 0
+  },
+  "pipeline_latency": {
+    "runs": 10,
+    "avg_ms": 11.84,
+    "min_ms": 7.04,
+    "max_ms": 44.91
+  }
+}
